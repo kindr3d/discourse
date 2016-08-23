@@ -188,6 +188,14 @@ class Post < ActiveRecord::Base
     end
   end
 
+  def add_nofollow?
+    user.blank? || SiteSetting.tl3_links_no_follow? || !user.has_trust_level?(TrustLevel[3])
+  end
+
+  def omit_nofollow?
+    !add_nofollow?
+  end
+
   def cook(*args)
     # For some posts, for example those imported via RSS, we support raw HTML. In that
     # case we can skip the rendering pipeline.
@@ -203,7 +211,7 @@ class Post < ActiveRecord::Base
       post_user = self.user
       cloned[1][:user_id] = post_user.id if post_user
 
-      cooked = if !post_user || SiteSetting.tl3_links_no_follow || !post_user.has_trust_level?(TrustLevel[3])
+      cooked = if add_nofollow?
                  post_analyzer.cook(*args)
                else
                  # At trust level 3, we don't apply nofollow to links
@@ -362,6 +370,10 @@ class Post < ActiveRecord::Base
       post_number == 1
   end
 
+  def is_reply_by_email?
+    via_email && post_number.present? && post_number > 1
+  end
+
   def is_flagged?
     post_actions.where(post_action_type_id: PostActionType.flag_types.values, deleted_at: nil).count != 0
   end
@@ -449,15 +461,14 @@ class Post < ActiveRecord::Base
     new_cooked != old_cooked
   end
 
-  def set_owner(new_user, actor)
+  def set_owner(new_user, actor, skip_revision=false)
     return if user_id == new_user.id
 
     edit_reason = I18n.t('change_owner.post_revision_text',
       old_user: (self.user.username_lower rescue nil) || I18n.t('change_owner.deleted_user'),
       new_user: new_user.username_lower
     )
-
-    revise(actor, {raw: self.raw, user_id: new_user.id, edit_reason: edit_reason}, bypass_bump: true)
+    revise(actor, {raw: self.raw, user_id: new_user.id, edit_reason: edit_reason}, {bypass_bump: true, skip_revision: skip_revision})
 
     if post_number == topic.highest_post_number
       topic.update_columns(last_post_user_id: new_user.id)
@@ -708,6 +719,7 @@ end
 # Indexes
 #
 #  idx_posts_created_at_topic_id            (created_at,topic_id)
+#  idx_posts_deleted_posts                  (topic_id,post_number)
 #  idx_posts_user_id_deleted_at             (user_id)
 #  index_posts_on_reply_to_post_number      (reply_to_post_number)
 #  index_posts_on_topic_id_and_post_number  (topic_id,post_number) UNIQUE

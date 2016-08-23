@@ -84,6 +84,7 @@ class UserSerializer < BasicUserSerializer
   private_attributes :locale,
                      :muted_category_ids,
                      :watched_tags,
+                     :watching_first_post_tags,
                      :tracked_tags,
                      :muted_tags,
                      :tracked_category_ids,
@@ -100,7 +101,9 @@ class UserSerializer < BasicUserSerializer
                      :card_image_badge,
                      :card_image_badge_id,
                      :muted_usernames,
-                     :mailing_list_posts_per_day
+                     :mailing_list_posts_per_day,
+                     :can_change_bio,
+                     :user_api_keys
 
   untrusted_attributes :bio_raw,
                        :bio_cooked,
@@ -129,6 +132,25 @@ class UserSerializer < BasicUserSerializer
 
   def include_email?
     object.id && object.id == scope.user.try(:id)
+  end
+
+  def can_change_bio
+    !(SiteSetting.enable_sso && SiteSetting.sso_overrides_bio)
+  end
+
+
+  def user_api_keys
+    keys = object.user_api_keys.where(revoked_at: nil).map do |k|
+      {
+        id: k.id,
+        application_name: k.application_name,
+        read: k.read,
+        write: k.write,
+        created_at: k.created_at
+      }
+    end
+
+    keys.length > 0 ? keys : nil
   end
 
   def card_badge
@@ -256,6 +278,10 @@ class UserSerializer < BasicUserSerializer
 
   def tracked_tags
     TagUser.lookup(object, :tracking).joins(:tag).pluck('tags.name')
+  end
+
+  def watching_first_post_tags
+    TagUser.lookup(object, :watching_first_post).joins(:tag).pluck('tags.name')
   end
 
   def watched_tags
