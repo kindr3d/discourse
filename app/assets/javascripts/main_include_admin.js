@@ -9,4 +9,6 @@
 //= require discourse/lib/export-result
 //= require_tree ./admin
 
+
 //= require resumable.js
+//= require d3.js
