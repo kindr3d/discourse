@@ -1,7 +1,12 @@
 class Admin::StatsController < ApplicationController
 
   def index
-      render json: { name: "donut", description: "delicious!" }
+
+      time = params[:time]
+
+      
+
+      render json: { name: "donut", description: "delicious!", time: time }
     end
 
 end

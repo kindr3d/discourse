@@ -2,6 +2,6 @@ import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Route.extend({
   model() {
-    return ajax('/admin/stats.json');
+    return ajax('/admin/stats/:time.json');
   }
 });

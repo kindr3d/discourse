@@ -238,7 +238,7 @@ Discourse::Application.routes.draw do
     get "dump_statement_cache"=> "diagnostics#dump_statement_cache", constraints: AdminConstraint.new
 
 
- get 'stats' => 'stats#index'
+ get 'stats/:time' => 'stats#index'
 
   end # admin namespace
 

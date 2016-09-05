@@ -2,7 +2,7 @@ export default {
   resource: 'admin',
 
   map() {
-    this.route('stats');
+    this.route('stats', { path: 'stats/:time' });
     this.route('dashboard', { path: '/' });
     this.resource('adminSiteSettings', { path: '/site_settings' }, function() {
       this.resource('adminSiteSettingsCategory', { path: 'category/:category_id'} );
