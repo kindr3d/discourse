@@ -6,12 +6,12 @@ $down : red;
 $minus: yellow;
 $up: green;
 
-.fa .fa-minus {
+.fa-minus {
   color: $minus;
 }
 
-.fa .fa-down {
-  color: red;
+.fa-arrow-down {
+  color: $down;
 }
 
 .fa-arrow-up {
