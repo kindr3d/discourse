@@ -19,7 +19,7 @@ class Admin::StatsController < ApplicationController
       # function that counts total new elements within time unit
       def total_count(target_model, column, time_limit)
         total = target_model.where("#{column} > ?", time_limit[:current]).count.to_f #active record
-        total_last = target_model.where("#{column} > ?", time_limit[:last]).count.to_f #active record
+        total_last = target_model.where("#{column} > ?", time_limit[:previous]).count.to_f #active record
         if total_last > 0 #avoid dividing by 0
           compare = ((total/total_last -1) *100).round(1)
         end
