@@ -1,12 +1,9 @@
 export default Ember.Component.extend({
-  didInsertElement() {
-    this._super();
-    this.$().animate({ backgroundColor: "yellow" }, 2000);
-    
-  },
+init(){
+  this._super();
+  this.increase = this.stats.visit_total.compare_percent >0;
+  this.same = this.stats.visit_total.compare_percent ===0;
+}
 
-  willDestroyElement() {
-    this._super();
-    this.$().stop();
-  }
+
 });
