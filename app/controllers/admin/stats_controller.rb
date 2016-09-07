@@ -1,4 +1,4 @@
-class Admin::StatsController < ApplicationController
+class Admin::StatsController < Admin::AdminController
 
   def index
 
@@ -12,7 +12,7 @@ class Admin::StatsController < ApplicationController
       when "month"
         {current: 4.weeks.ago, previous: 8.weeks.ago}
       else
-        raise "Invalid time parameter"
+        raise Discourse::NotFound
       end
 
 
