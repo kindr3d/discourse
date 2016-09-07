@@ -42,6 +42,14 @@ export default function() {
 
     this.get('/admin/plugins', () => response({ plugins: [] }));
 
+    this.get('/admin/stats/today.json', () => {
+      return response({
+        visit_title: "Visits",
+        time: "today",
+        visit_total: {total: 4, compare_percent: 25}
+      });
+    });
+
     this.get('/composer_messages', () => response({ composer_messages: [] }));
 
     this.get("/latest.json", () => {
@@ -116,8 +124,8 @@ export default function() {
     this.get('/post_action_users', () => {
       return response({
         post_action_users: [
-           {id: 1, username: 'eviltrout', avatar_template: '/user_avatar/default/eviltrout/{size}/1.png', username_lower: 'eviltrout' }
-         ]
+          {id: 1, username: 'eviltrout', avatar_template: '/user_avatar/default/eviltrout/{size}/1.png', username_lower: 'eviltrout' }
+        ]
       });
     });
 
@@ -167,9 +175,9 @@ export default function() {
 
       if (data.password === 'not-activated') {
         return response({ error: "not active",
-                          reason: "not_activated",
-                          sent_to_email: '<small>eviltrout@example.com</small>',
-                          current_email: '<small>current@example.com</small>' });
+        reason: "not_activated",
+        sent_to_email: '<small>eviltrout@example.com</small>',
+        current_email: '<small>current@example.com</small>' });
       }
 
       return response(400, {error: 'invalid login'});
@@ -215,104 +223,104 @@ export default function() {
       const data = parsePostData(request.requestBody);
 
       return response(200, { basic_topic: {id: request.params.id,
-                                           title: data.title,
-                                           fancy_title: data.title,
-                                           slug: request.params.slug } });
-    });
-
-    this.get("/groups/discourse/topics.json", () => {
-      return response(200, fixturesByUrl['/groups/discourse/posts.json']);
-    });
-
-    this.get("/groups/discourse/mentions.json", () => {
-      return response(200, fixturesByUrl['/groups/discourse/posts.json']);
-    });
-
-    this.get("/groups/discourse/messages.json", () => {
-      return response(200, fixturesByUrl['/groups/discourse/posts.json']);
-    });
-
-    this.get('/t/:topic_id/posts.json', request => {
-      const postIds = request.queryParams.post_ids;
-      const posts = postIds.map(p => ({id: parseInt(p), post_number: parseInt(p) }));
-      return response(200, { post_stream: { posts } });
-    });
-
-    this.get('/posts/:post_id/reply-history.json', () => {
-      return response(200, [ { id: 2222, post_number: 2222 } ]);
-    });
-
-    this.post('/user_badges', () => response(200, fixturesByUrl['/user_badges']));
-    this.delete('/user_badges/:badge_id', success);
-
-    this.post('/posts', function(request) {
-      const data = parsePostData(request.requestBody);
-
-      if (data.title === "this title triggers an error") {
-        return response(422, {errors: ['That title has already been taken']});
-      }
-
-      if (data.raw === "enqueue this content please") {
-        return response(200, { success: true, action: 'enqueued' });
-      }
-
-      return response(200, {
-        success: true,
-        action: 'create_post',
-        post: {id: 12345, topic_id: 280, topic_slug: 'internationalization-localization'}
+        title: data.title,
+        fancy_title: data.title,
+        slug: request.params.slug } });
       });
+
+      this.get("/groups/discourse/topics.json", () => {
+        return response(200, fixturesByUrl['/groups/discourse/posts.json']);
+      });
+
+      this.get("/groups/discourse/mentions.json", () => {
+        return response(200, fixturesByUrl['/groups/discourse/posts.json']);
+      });
+
+      this.get("/groups/discourse/messages.json", () => {
+        return response(200, fixturesByUrl['/groups/discourse/posts.json']);
+      });
+
+      this.get('/t/:topic_id/posts.json', request => {
+        const postIds = request.queryParams.post_ids;
+        const posts = postIds.map(p => ({id: parseInt(p), post_number: parseInt(p) }));
+        return response(200, { post_stream: { posts } });
+      });
+
+      this.get('/posts/:post_id/reply-history.json', () => {
+        return response(200, [ { id: 2222, post_number: 2222 } ]);
+      });
+
+      this.post('/user_badges', () => response(200, fixturesByUrl['/user_badges']));
+      this.delete('/user_badges/:badge_id', success);
+
+      this.post('/posts', function(request) {
+        const data = parsePostData(request.requestBody);
+
+        if (data.title === "this title triggers an error") {
+          return response(422, {errors: ['That title has already been taken']});
+        }
+
+        if (data.raw === "enqueue this content please") {
+          return response(200, { success: true, action: 'enqueued' });
+        }
+
+        return response(200, {
+          success: true,
+          action: 'create_post',
+          post: {id: 12345, topic_id: 280, topic_slug: 'internationalization-localization'}
+        });
+      });
+
+      this.post('/topics/timings', () => response(200, {}));
+
+      const siteText = {id: 'site.test', value: 'Test McTest'};
+      const overridden = {id: 'site.overridden', value: 'Overridden', overridden: true };
+
+      this.get('/admin/users/list/active.json', () => {
+        return response(200, [
+          {id: 1, username: 'eviltrout', email: '<small>eviltrout@example.com</small>'}
+        ]);
+      });
+
+      this.get('/admin/customize/site_texts', request => {
+
+        if (request.queryParams.overridden) {
+          return response(200, {site_texts: [overridden] });
+        } else {
+          return response(200, {site_texts: [siteText, overridden] });
+        }
+      });
+
+      this.get('/admin/customize/site_texts/:key', () => response(200, {site_text: siteText }));
+      this.delete('/admin/customize/site_texts/:key', () => response(200, {site_text: siteText }));
+
+      this.put('/admin/customize/site_texts/:key', request => {
+        const result = parsePostData(request.requestBody);
+        result.id = request.params.key;
+        result.can_revert = true;
+        return response(200, {site_text: result});
+      });
+
+      this.get('/tag_groups', () => response(200, {tag_groups: []}));
+      this.post('/admin/users/:user_id/generate_api_key', success);
+      this.delete('/admin/users/:user_id/revoke_api_key', success);
+      this.post('/admin/badges', success);
+      this.delete('/admin/badges/:id', success);
     });
 
-    this.post('/topics/timings', () => response(200, {}));
-
-    const siteText = {id: 'site.test', value: 'Test McTest'};
-    const overridden = {id: 'site.overridden', value: 'Overridden', overridden: true };
-
-    this.get('/admin/users/list/active.json', () => {
-      return response(200, [
-        {id: 1, username: 'eviltrout', email: '<small>eviltrout@example.com</small>'}
-      ]);
-    });
-
-    this.get('/admin/customize/site_texts', request => {
-
-      if (request.queryParams.overridden) {
-        return response(200, {site_texts: [overridden] });
-      } else {
-        return response(200, {site_texts: [siteText, overridden] });
+    server.prepareBody = function(body){
+      if (body && typeof body === "object") {
+        return JSON.stringify(body);
       }
-    });
+      return body;
+    };
 
-    this.get('/admin/customize/site_texts/:key', () => response(200, {site_text: siteText }));
-    this.delete('/admin/customize/site_texts/:key', () => response(200, {site_text: siteText }));
+    server.unhandledRequest = function(verb, path) {
+      const error = 'Unhandled request in test environment: ' + path + ' (' + verb + ')';
+      window.console.error(error);
+      throw error;
+    };
 
-    this.put('/admin/customize/site_texts/:key', request => {
-      const result = parsePostData(request.requestBody);
-      result.id = request.params.key;
-      result.can_revert = true;
-      return response(200, {site_text: result});
-    });
-
-    this.get('/tag_groups', () => response(200, {tag_groups: []}));
-    this.post('/admin/users/:user_id/generate_api_key', success);
-    this.delete('/admin/users/:user_id/revoke_api_key', success);
-    this.post('/admin/badges', success);
-    this.delete('/admin/badges/:id', success);
-  });
-
-  server.prepareBody = function(body){
-    if (body && typeof body === "object") {
-      return JSON.stringify(body);
-    }
-    return body;
-  };
-
-  server.unhandledRequest = function(verb, path) {
-    const error = 'Unhandled request in test environment: ' + path + ' (' + verb + ')';
-    window.console.error(error);
-    throw error;
-  };
-
-  server.checkPassthrough = request => request.requestHeaders['Discourse-Script'];
-  return server;
-}
+    server.checkPassthrough = request => request.requestHeaders['Discourse-Script'];
+    return server;
+  }

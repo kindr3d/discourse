@@ -3,8 +3,8 @@
 </div>
 
 <div class='visits-stats-total'>
-  {{stats.visit_total.total}}
-    {{#if stats.visit_total.compare_percent}}
+  <span class="total">{{stats.visit_total.total}}</span>
+    {{#if exists}}
       {{#if same}}
         <i class="fa fa-minus" aria-hidden="true"></i>
         {{else}}
@@ -13,8 +13,8 @@
           {{else}}
             <i class="fa fa-arrow-down" area-hidden="true"></i>
           {{/if}}
+          <span class="percent">{{stats.visit_total.compare_percent}}%</span>
       {{/if}}
-      {{stats.visit_total.compare_percent}} %
     {{/if}}
 </div>
 
