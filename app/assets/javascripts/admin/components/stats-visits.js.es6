@@ -10,68 +10,70 @@ export default Ember.Component.extend({
 
   didInsertElement(){
     this._super();
-    //var data = this.stats.visit_data;
-    //fake data for testing
-    var data= [["2016-08-15 00:00:00 UTC", 2],
-    ["2016-08-22 00:00:00 UTC", 7],
-    ["2016-08-29 00:00:00 UTC", 10],
-    ["2016-09-05 00:00:00 UTC", 4]];
+    var data = this.stats.visit_data;
 
-    var w = 400;
-    var h = 150;
-    var barPadding = 5;
+    var w = 500;
+    var h = 250;
+    var sidePadding = 40;
+    var properH = h - sidePadding*2;
 
     var svg = d3.select('.forD3')
     .append("svg")
     .attr("width", w)
-    .attr("height", h);
-
-    svg.selectAll("rect")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x",  function(d, i) {
-      return i * (w / data.length);
-    })
-    .attr("y", function (d) {
-      return h - d[1] *10;
-    })
-    .attr("width", w / data.length - barPadding)
-    .attr("height", function(d) {
-      return d[1] * 10;
-    })
-    .attr("fill", function(d) {
-      return "rgb(0, 0, " + (d[1] * 50) + ")";
-    });
+    .attr("height", h)
+    .append("g")
+    .attr("transform", "translate(" + sidePadding + "," + sidePadding + ")");
 
     var yScale = d3.scale.linear()
-    .domain([d3.min(data, function(d) {
-      return d[1]; }), d3.max(data, function(d) {
-        return d[1]; })])
-        .range([0, h]);
+    .range([properH, 0])
+    .domain([0, d3.max(data, function(d) {  return d.value; })]);
 
-        var xScale = d3.scale.linear()
-        .domain(data.map(function(d) { return d[0]; }))
-        .range([0, w]);
 
-        var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom");
+      var xScale = d3.scale.ordinal()
+      .rangeRoundBands([0, w-sidePadding*2], .1)
+      .domain(data.map(function(d) { return d.label; }));
 
-        var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(10, "%");
+      var xAxis = d3.svg.axis()
+      .scale(xScale)
+      .orient("bottom");
 
-        svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + h + ")")
-        .call(xAxis);
+      var yAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient("left")
+      .ticks(5);
 
-        svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
+      svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + properH + ")")
+      .call(xAxis);
 
-      }
+      svg.append("g")
+      .attr("class", "y axis")
+      //.attr("transform", "translate(" + sidePadding +",0)")
+      .call(yAxis)
+      .append("text")
+      .attr("y", 6)
+      .attr("dy", 0)
+      .style("text-anchor", "end");
 
-    });
+      svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar")
+      .attr("x",  function(d) {
+        return xScale(d.label);
+      })
+      .attr("width", xScale.rangeBand())
+      .attr("y", function (d) {
+        return yScale(d.value);
+      })
+      .attr("height", function(d) {
+        return properH -yScale(d.value) ;
+      })
+      .attr("fill", function(d) {
+        return "rgb(0, 0, " + (d.value*2) + ")";
+      });
+
+    }
+  });
