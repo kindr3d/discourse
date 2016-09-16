@@ -49,7 +49,6 @@ export default Ember.Component.extend({
 
       svg.append("g")
       .attr("class", "y axis")
-      //.attr("transform", "translate(" + sidePadding +",0)")
       .call(yAxis)
       .append("text")
       .attr("y", 6)

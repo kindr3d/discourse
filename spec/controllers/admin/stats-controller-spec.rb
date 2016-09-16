@@ -49,7 +49,7 @@ describe Admin::StatsController do
       context "and visit data for bar chart" do
 
         it "is present as a hash" do
-          expect(@parsed_response["visit_data"]).to be_kind_of(Hash)
+          expect(@parsed_response["visit_data"]).to be_kind_of(Array)
         end
 
         # it "and not empty" do
@@ -59,6 +59,14 @@ describe Admin::StatsController do
         # it "and visits value is valid" do
         #   expect(@parsed_response["visit_data"][0]).to be_kind_of(Fixnum)
         # end
+
+      end
+
+      context "and users data for bar chart" do
+
+        it "is present as a hash" do
+          expect(@parsed_response["user_data"]).to be_kind_of(Hash)
+        end
 
       end
 
