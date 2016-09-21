@@ -65,7 +65,7 @@ describe Admin::StatsController do
       context "and users data for bar chart" do
 
         it "is present as a hash" do
-          expect(@parsed_response["user_data"]).to be_kind_of(Hash)
+          expect(@parsed_response["user_data"]).to be_kind_of(Array)
         end
 
       end
