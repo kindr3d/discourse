@@ -19,6 +19,7 @@ componentTest('test the of user component', {
     assert.equal(this.$('.users-stats-total .total').text(), '4');
     assert.equal(this.$('.users-stats-total .percent').text(), '25%');
     assert.equal(this.$('.users-stats-time p').text(), 'today');
+  //  assert.equal(this.$('.forD3-useres').children().length, 1, "didn't append svg");
   },
 
 });

@@ -33,7 +33,7 @@ export default Ember.Component.extend({
     .enter()
     .append("g");
 
-    bars.append("rect")
+    bars.append("rect") //bars themseles
     .attr("class", "bar")
     .attr("x", 0)
     .attr("y", d => yScale(d.label))
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     .attr("height", yScale.rangeBand())
     .attr("fill", d => "rgb(0, 0, " + (d.count * 2) + ")");
 
-    bars.append("text")
+    bars.append("text") //texts
     .text( d => d.label + " " + d.count + " (" + d.percent + "%)")
     .attr("x", 0)
     .attr("y", d => yScale(d.label) - 10)
