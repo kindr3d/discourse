@@ -1,11 +1,16 @@
 export default Ember.Component.extend({
-  init(){
+  didInsertElement(){
     this._super();
-    this.increase = this.stats.topic_total.compare_percent > 0;
-    this.same = this.stats.topic_total.compare_percent === 0;
-    this.exists = this.stats.topic_total.compare_percent !== null;
-  },
+    var data = this.stats.visit_data;
 
-  didInsertElement(){}
+    var w = 500;
+    var h = 250;
+
+    var svg = d3.select('.forD3-topics') // eslint-disable-line no-undef
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h);
+
+  }
 
 });

@@ -42,13 +42,7 @@ export default function() {
 
     this.get('/admin/plugins', () => response({ plugins: [] }));
 
-    this.get('/admin/stats/today.json', () => {
-      return response({
-        visit_title: "Visits",
-        time: "today",
-        visit_total: {total: 4, compare_percent: 25}
-      });
-    });
+    this.get('/admin/stats/today.json', () => response(fixturesByUrl['/admin/stats/today.json']));
 
     this.get('/composer_messages', () => response({ composer_messages: [] }));
 

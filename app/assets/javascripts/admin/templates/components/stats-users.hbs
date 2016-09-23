@@ -2,21 +2,7 @@
   <h1>{{stats.user_title}}</h1>
 </div>
 
-<div class='users-stats-total'>
-  <span class="total">{{stats.user_total.total}}</span>
-    {{#if exists}}
-      {{#if same}}
-        <i class="fa fa-minus" aria-hidden="true"></i>
-        {{else}}
-          {{#if increase}}
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-          {{else}}
-            <i class="fa fa-arrow-down" area-hidden="true"></i>
-          {{/if}}
-          <span class="percent">{{stats.user_total.compare_percent}}%</span>
-      {{/if}}
-    {{/if}}
-</div>
+{{stats-arrows total=stats.user_total}}
 
 <div class='users-stats-time'>
   <p>{{stats.time}}</p>

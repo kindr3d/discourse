@@ -2,21 +2,7 @@
   <h1>{{stats.visit_title}}</h1>
 </div>
 
-<div class='visits-stats-total'>
-  <span class="total">{{stats.visit_total.total}}</span>
-    {{#if exists}}
-      {{#if same}}
-        <i class="fa fa-minus" aria-hidden="true"></i>
-        {{else}}
-          {{#if increase}}
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-          {{else}}
-            <i class="fa fa-arrow-down" area-hidden="true"></i>
-          {{/if}}
-          <span class="percent">{{stats.visit_total.compare_percent}}%</span>
-      {{/if}}
-    {{/if}}
-</div>
+{{stats-arrows total=stats.visit_total}}
 
 <div class='visits-stats-time'>
   <p>{{stats.time}}</p>

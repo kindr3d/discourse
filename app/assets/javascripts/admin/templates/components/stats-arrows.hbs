@@ -1,0 +1,15 @@
+<div class='stats-total'>
+  <span class="total">{{total.total}}</span>
+    {{#if exists}}
+      {{#if same}}
+        <i class="fa fa-minus" aria-hidden="true"></i>
+        {{else}}
+          {{#if increase}}
+            <i class="fa fa-arrow-up" aria-hidden="true"></i>
+          {{else}}
+            <i class="fa fa-arrow-down" area-hidden="true"></i>
+          {{/if}}
+          <span class="percent">{{total.compare_percent}}%</span>
+      {{/if}}
+    {{/if}}
+</div>

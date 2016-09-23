@@ -1,13 +1,4 @@
 export default Ember.Component.extend({
-  init(){
-    this._super();
-    this.increase = this.stats.visit_total.compare_percent > 0;
-    this.same = this.stats.visit_total.compare_percent === 0;
-    this.exists = this.stats.visit_total.compare_percent !== null;
-    console.log(this.same);
-    console.log(this.exists);
-  },
-
   didInsertElement(){
     this._super();
     var data = this.stats.visit_data;

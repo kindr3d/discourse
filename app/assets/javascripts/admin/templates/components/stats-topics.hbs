@@ -2,22 +2,10 @@
   <h1>{{stats.topic_title}}</h1>
 </div>
 
-<div class='topics-stats-total'>
-  <span class="total">{{stats.topic_total.total}}</span>
-    {{#if exists}}
-      {{#if same}}
-        <i class="fa fa-minus" aria-hidden="true"></i>
-        {{else}}
-          {{#if increase}}
-            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-          {{else}}
-            <i class="fa fa-arrow-down" area-hidden="true"></i>
-          {{/if}}
-          <span class="percent">{{stats.topic_total.compare_percent}}%</span>
-      {{/if}}
-    {{/if}}
-</div>
+{{stats-arrows total=stats.topic_total}}
 
 <div class='topics-stats-time'>
   <p>{{stats.time}}</p>
 </div>
+
+<div class="forD3-topics"></div>
