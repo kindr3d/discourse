@@ -10,4 +10,15 @@
 
 <div class="forD3-topics"></div>
 
-<div class="topics-categories"></div>
+
+<ul class="topics-categories">
+  {{#each cats}}
+  <li>
+    <a class="badge-wrapper bullet" href={{this.url}}>
+      <span class="badge-category-bg" style={{this.style}}></span>
+      <span class="badge-category clear-badge">{{this.name}}
+      </span>
+    </a>
+  </li>
+  {{/each}}
+</ul>

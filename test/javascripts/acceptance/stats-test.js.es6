@@ -7,8 +7,10 @@ test("Admin stats", function(assert) {
     assert.ok(exists('.visits-stats-title'), 'the stats title is present');
     assert.ok(exists('.users-stats-title'), 'the stats title is present');
     assert.ok(exists('.topics-stats-title'), 'the stats title is present');
+    assert.ok(exists('.posts-stats-title'), 'the stats title is present');
     assert.equal(find('.forD3-visits').children().length, 1, "didn't append visit chart");
     assert.equal(find('.forD3-users').children().length, 1, "didn't append user chart");
     assert.equal(find('.forD3-topics').children().length, 1, "didn't append topic chart");
+    assert.equal(find('.topics').children().length, 5, "didn't append topic chart");
   });
 });

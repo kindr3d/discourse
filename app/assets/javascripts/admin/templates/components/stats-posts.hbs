@@ -1,0 +1,18 @@
+<div class='posts-stats-title'>
+  <h1>{{stats.post_title}}</h1>
+</div>
+
+{{stats-arrows total=stats.post_total}}
+
+<div class='posts-stats-time'>
+  <p>{{stats.time}}</p>
+</div>
+
+<ul class="topics">
+  {{#each stats.top_topics}}
+  <li>
+    <h1>{{this.title}}</h1>
+    <p>{{this.posts_count}}</p>
+  </li>
+  {{/each}}
+</ul>

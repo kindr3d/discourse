@@ -48,24 +48,36 @@ describe Admin::StatsController do
 
       context "and visit data for bar chart" do
 
-        it "is present as a hash" do
+        it "is present as an array" do
           expect(@parsed_response["visit_data"]).to be_kind_of(Array)
         end
-
-        # it "and not empty" do
-        #   expect(@parsed_response["visit_data"]).not_to be_empty
-        # end
-
-        # it "and visits value is valid" do
-        #   expect(@parsed_response["visit_data"][0]).to be_kind_of(Fixnum)
-        # end
 
       end
 
       context "and users data for bar chart" do
 
-        it "is present as a hash" do
+        it "is present as an array" do
           expect(@parsed_response["user_data"]).to be_kind_of(Array)
+        end
+
+      end
+
+      context "and topic data for a pie chart" do
+
+        it "is present as an array" do
+          expect(@parsed_response["topic_data"]).to be_kind_of(Array)
+        end
+
+        it "and categorie as well" do
+          expect(@parsed_response["topic_categories"]).to be_kind_of(Array)
+        end
+
+      end
+
+      context "and top topics data" do
+
+        it "is present as an array" do
+          expect(@parsed_response["top_topics"]).to be_kind_of(Array)
         end
 
       end
