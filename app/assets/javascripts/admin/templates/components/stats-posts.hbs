@@ -9,10 +9,10 @@
 </div>
 
 <ul class="topics">
-  {{#each stats.top_topics}}
+  {{#each stats.top_topics as |topic|}}
   <li>
-    <h1>{{this.title}}</h1>
-    <p>{{this.posts_count}}</p>
+    <h1>{{topic.title}}</h1>
+    <p>{{topic.posts_count}}</p>
   </li>
   {{/each}}
 </ul>

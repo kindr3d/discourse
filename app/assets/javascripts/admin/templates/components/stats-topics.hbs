@@ -12,11 +12,11 @@
 
 
 <ul class="topics-categories">
-  {{#each cats}}
+  {{#each cats as |cat|}}
   <li>
-    <a class="badge-wrapper bullet" href={{this.url}}>
-      <span class="badge-category-bg" style={{this.style}}></span>
-      <span class="badge-category clear-badge">{{this.name}}
+    <a class="badge-wrapper bullet" href={{cat.url}}>
+      <span class="badge-category-bg" style={{cat.style}}></span>
+      <span class="badge-category clear-badge">{{cat.name}}
       </span>
     </a>
   </li>
