@@ -1,6 +1,6 @@
-{{#link-to "admin.stats" "today"}}Today{{/link-to}}
-{{#link-to "admin.stats" "week"}}Week{{/link-to}}
-{{#link-to "admin.stats" "month"}}Month{{/link-to}}
+{{#link-to "admin.stats" (query-params time="today")}}Today{{/link-to}}
+{{#link-to "admin.stats" (query-params time="week")}}Week{{/link-to}}
+{{#link-to "admin.stats" (query-params time="month")}}Month{{/link-to}}
 
 {{stats-visits stats=model}}
 

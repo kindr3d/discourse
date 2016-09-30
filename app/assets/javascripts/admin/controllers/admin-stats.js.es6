@@ -1,7 +1,5 @@
 export default Ember.Controller.extend({
-  // queryParams: {
-  //   time: {
-  //     refreshModel: false
-  //   }
-  // }
+  queryParams: ["time"],
+  time: "today",
+
 });

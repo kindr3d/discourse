@@ -3,20 +3,15 @@ import { ajax } from 'discourse/lib/ajax';
 export default Ember.Route.extend({
   queryParams: {
     time: {
-      refreshModel: false,
+      refreshModel: true,
       replace: false,
     }
   },
 
   model(params) {
-    console.log(params.time);
-    return ajax('/admin/stats/'+params.time+'.json');
+    return ajax('/admin/stats.json?time='+params.time);
+    // this.set
   },
 
-  // willTransition: function(transition) {
-  //   if ((this.get('admin.stats') === transition.targetName)) {
-  //     transition.abort();
-  //     // return;
-  //   }
-  // }
+
 });
