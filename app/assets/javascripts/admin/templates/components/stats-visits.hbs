@@ -8,4 +8,6 @@
   <p>{{stats.time}}</p>
 </div>
 
-<div class="forD3-visits"></div>
+{{#if chart}}
+  {{stats-visits-chart data=stats.visit_data}}
+{{/if}}

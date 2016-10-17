@@ -8,8 +8,9 @@
   <p>{{stats.time}}</p>
 </div>
 
-<div class="forD3-topics"></div>
-
+{{#if chart}}
+  {{stats-topics-chart data=stats.topic_data}}
+{{/if}}
 
 <ul class="topics-categories">
   {{#each cats as |cat|}}
