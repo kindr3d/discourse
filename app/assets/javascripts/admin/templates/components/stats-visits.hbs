@@ -4,10 +4,8 @@
 
 {{stats-arrows total=stats.visit_total}}
 
-<div class='visits-stats-time'>
-  <p>{{stats.time}}</p>
-</div>
-
 {{#if chart}}
   {{stats-visits-chart data=stats.visit_data}}
+{{else}}
+  {{stats-no-chart}}
 {{/if}}

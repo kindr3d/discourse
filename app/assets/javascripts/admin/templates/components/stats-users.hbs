@@ -4,10 +4,8 @@
 
 {{stats-arrows total=stats.user_total}}
 
-<div class='users-stats-time'>
-  <p>{{stats.time}}</p>
-</div>
-
 {{#if chart}}
   {{stats-users-chart data=stats.user_data}}
+{{else}}
+  {{stats-no-chart}}
 {{/if}}

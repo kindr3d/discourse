@@ -4,12 +4,11 @@
 
 {{stats-arrows total=stats.topic_total}}
 
-<div class='topics-stats-time'>
-  <p>{{stats.time}}</p>
-</div>
 
 {{#if chart}}
   {{stats-topics-chart data=stats.topic_data}}
+{{else}}
+  {{stats-no-chart}}
 {{/if}}
 
 <ul class="topics-categories">

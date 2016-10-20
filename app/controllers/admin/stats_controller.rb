@@ -26,6 +26,7 @@ class Admin::StatsController < Admin::AdminController
     #define visit bar chart data
     visit_raw = UserVisit.where("visited_at > ?", time_unit[:visit_limit]).group("DATE_TRUNC('#{time_unit[:unit]}', visited_at)").count
     visit_data = visit_raw.map {|k, v| {label: k.to_s().slice(0, 10), value: v}}.sort_by { |d| d[:label] }
+    # TODO identify gaps
 
     #define user bar chart data
     user_data = user_stats(time_unit)
