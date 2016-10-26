@@ -1,1 +1,10 @@
 <div class="forD3-visits"></div>
+<svg>
+  <g {{bind-attr transform='transformG'}}></g>
+  {{stats-visits-chart-x class="x axis"
+  transform=xAxisTransform
+  scale=xScale}}
+  {{stats-visits-chart-y class="y axis"
+  scale=yScale
+  ticks=5}}
+</svg>

@@ -1,61 +1,59 @@
 export default Ember.Component.extend({
-  didInsertElement(){
+  data: function(){
     this._super();
-    var data = this.data;
+    return this.data;
+  },
+  w: 500,
+  h: 250,
+  sidePadding: 40,
+  properH: function () {
+    return this.get("h") - this.get("sidePadding") * 2;
+  }.property("h", "sidePadding"),
 
-    var w = 500;
-    var h = 250;
-    var sidePadding = 40;
-    var properH = h - sidePadding * 2;
+  transformG: function() {
+    return "translate(" + this.get("sidePadding") + "," + this.get("sidePadding") + ")";
+  }.property("sidePadding"),
 
-    var svg = d3.select('.forD3-visits') // eslint-disable-line no-undef
-    .append("svg")
-    .attr("width", w)
-    .attr("height", h)
-    .append("g")
-    .attr("transform", "translate(" + sidePadding + "," + sidePadding + ")");
+  yScale: function() {
+    return d3.scale.linear() // eslint-disable-line no-undef
+    .range([this.get("properH"), 0])
+    .domain([0, d3.max(this.get("data"), d => d.value)]); // eslint-disable-line no-undef
+  }.property("properH", "data"),
 
-    var yScale = d3.scale.linear() // eslint-disable-line no-undef
-    .range([properH, 0])
-    .domain([0, d3.max(data, d => d.value)]); // eslint-disable-line no-undef
+  xScale: function() {
+    return d3.scale.ordinal() // eslint-disable-line no-undef
+    .rangeRoundBands([0, this.get("w") - this.get("sidePadding") * 2], .1)
+    .domain(this.get("data").map(d => d.label));
+  }.property("w", "properH", "data"),
 
+  xAxisFormat: function() {
+    return "translate(0," + this.get("properH") + ")";
+  }.property("properH"),
 
-      var xScale = d3.scale.ordinal() // eslint-disable-line no-undef
-      .rangeRoundBands([0, w-sidePadding * 2], .1)
-      .domain(data.map(d => d.label));
+  didInsertElement(){
+    drawChart(this.get("data"), this.get("properH"), this.get("xScale"), this.get("yScale"));
 
-      var xAxis = d3.svg.axis() // eslint-disable-line no-undef
-      .scale(xScale)
-      .orient("bottom");
+    this.set('w', this.$().width());
+    this.set('h', this.$().height());
+  },
 
-      var yAxis = d3.svg.axis() // eslint-disable-line no-undef
-      .scale(yScale)
-      .orient("left")
-      .ticks(5);
+  updateBars: function () {
+    drawChart(this.get("data"), this.get("data"), this.get("xScale"), this.get("yScale"));
+  }.observes("data")
+});
 
-      svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + properH + ")")
-      .call(xAxis);
-
-      svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-      .append("text")
-      .attr("y", 6)
-      .attr("dy", 0)
-      .style("text-anchor", "end");
-
-      svg.selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("class", "bar")
-      .attr("x",  d => xScale(d.label))
-      .attr("width", xScale.rangeBand())
-      .attr("y", d => yScale(d.value))
-      .attr("height", d => properH - yScale(d.value))
-      .attr("fill", d => "rgb(0, 0, " + (d.value * 2) + ")");
-
-    }
-  });
+function drawChart(data, properH, xScale, yScale) {
+  var x = xScale;
+  var y = yScale;
+  d3.select("svg") // eslint-disable-line no-undef
+  .select("rect")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("x",  d => x(d.label))
+  .attr("width", x.rangeBand())
+  .attr("y", d => y(d.value))
+  .attr("height", d => properH - y(d.value))
+  .attr("fill", d => "rgb(0, 0, " + (d.value * 2) + ")");
+}
