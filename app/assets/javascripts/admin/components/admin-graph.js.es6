@@ -12,14 +12,13 @@ export default Ember.Component.extend({
       datasets: [{
         data: rawData.map(r => r.y),
         label: model.get('title'),
-        backgroundColor: "rgba(255,0,68,0.3)",
-        borderColor: "#f04"
+        backgroundColor: "rgba(200,220,240,0.3)",
+        borderColor: "#08C"
       }]
     };
 
     const config = {
       type: 'line',
-      lineDashType: "dot",
       data: data,
       options: {
         responsive: true,
