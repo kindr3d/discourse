@@ -1,11 +1,17 @@
-{{#link-to "admin.stats" "today"}}Today{{/link-to}}
-{{#link-to "admin.stats" "week"}}Week{{/link-to}}
-{{#link-to "admin.stats" "month"}}Month{{/link-to}}
+<div class='admin-controls'>
+  <div class='span15'>
+    <ul class="nav nav-pills">
+      <li>
+        {{#link-to "admin.stats" "today"}}Today{{/link-to}}
+      </li>
+      <li>
+        {{#link-to "admin.stats" "week"}}Week{{/link-to}}
+      </li>
+      <li>
+        {{#link-to "admin.stats" "month"}}Month{{/link-to}}
+      </li>
+    </ul>
+  </div>
+</div>
 
-{{stats-visits stats=model}}
-
-{{stats-users stats=model}}
-
-{{stats-topics stats=model}}
-
-{{stats-posts stats=model}}
+{{stats-visits stats=model}} {{stats-users stats=model}} {{stats-topics stats=model}} {{stats-posts stats=model}}

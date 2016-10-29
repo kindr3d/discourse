@@ -14,7 +14,7 @@ export default Ember.Route.extend({
   },
 
   // willTransition: function(transition) {
-  //   if ((this.get('admin.stats') === transition.targetName)) {
+  //   if ((this.controller.get('admin.stats') === transition.targetName)) {
   //     transition.abort();
   //     // return;
   //   }
