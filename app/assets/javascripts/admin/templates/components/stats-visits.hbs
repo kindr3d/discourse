@@ -1,9 +1,7 @@
 <div class='visits-stats-title'>
-  <h1>{{stats.visit_title}}</h1>
+  <h2>{{stats.visit_title}}</h2>
+  {{stats-arrows total=stats.visit_total}}
 </div>
-
-{{stats-arrows total=stats.visit_total}}
-
 {{#if chart}}
   {{stats-visits-chart data=stats.visit_data}}
 {{else}}

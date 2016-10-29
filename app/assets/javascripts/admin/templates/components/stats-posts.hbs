@@ -1,8 +1,7 @@
 <div class='posts-stats-title'>
-  <h1>{{stats.post_title}}</h1>
+  <h2>{{stats.post_title}}</h2>
+  {{stats-arrows total=stats.post_total}}
 </div>
-
-{{stats-arrows total=stats.post_total}}
 
 <ul class="topics">
   {{#each stats.top_topics as |topic|}}
@@ -11,6 +10,6 @@
     <p>{{topic.posts_count}}</p>
   </li>
   {{else}}
-  <li>There are no posts to be displayed</li>
+    {{stats-no-chart}}
   {{/each}}
 </ul>

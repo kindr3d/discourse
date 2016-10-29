@@ -1,9 +1,6 @@
 <div class='topics-stats-title'>
-  <h1>{{stats.topic_title}}</h1>
+  <h2>{{stats.topic_title}}</h2> {{stats-arrows total=stats.topic_total}}
 </div>
-
-{{stats-arrows total=stats.topic_total}}
-
 
 {{#if chart}}
   {{stats-topics-chart data=stats.topic_data}}
@@ -13,12 +10,12 @@
 
 <ul class="topics-categories">
   {{#each cats as |cat|}}
-  <li>
-    <a class="badge-wrapper bullet" href={{cat.url}}>
-      <span class="badge-category-bg" style={{cat.style}}></span>
-      <span class="badge-category clear-badge">{{cat.name}}
+    <li>
+      <a class="badge-wrapper bullet" href= {{cat.url}}>
+        <span class="badge-category-bg" style= {{cat.style}}></span>
+        <span class="badge-category clear-badge">{{cat.name}}
       </span>
-    </a>
-  </li>
+      </a>
+    </li>
   {{/each}}
 </ul>

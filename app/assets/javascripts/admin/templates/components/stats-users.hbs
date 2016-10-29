@@ -1,11 +1,11 @@
 <div class='users-stats-title'>
-  <h1>{{stats.user_title}}</h1>
+  <h2>{{stats.user_title}}</h2>
+  {{stats-arrows total=stats.user_total}}
 </div>
-
-{{stats-arrows total=stats.user_total}}
-
+<div class="chart-stats">
 {{#if chart}}
   {{stats-users-chart data=stats.user_data}}
 {{else}}
   {{stats-no-chart}}
 {{/if}}
+</div>

@@ -14,4 +14,9 @@
   </div>
 </div>
 
-{{stats-visits stats=model}} {{stats-users stats=model}} {{stats-topics stats=model}} {{stats-posts stats=model}}
+<div class="stats-container">
+{{stats-visits stats=model class="stats-each"}}
+{{stats-users stats=model class="stats-each"}}
+{{stats-topics stats=model class="stats-each"}}
+{{stats-posts stats=model class="stats-each"}}
+</div>

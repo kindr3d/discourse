@@ -18,6 +18,19 @@ $up: green;
 color: $up;
 }
 
+.stats-container {
+  width: 100%;
+  margin-top: 20px;
+  padding: 0;
+}
+
+.stats-each {
+  float: left;
+  width: 50%;
+  max-width: 50%;
+}
+
+
 .axis {
   font: 10px sans-serif;
 }

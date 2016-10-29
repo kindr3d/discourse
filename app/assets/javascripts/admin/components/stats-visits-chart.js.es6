@@ -1,4 +1,5 @@
 export default Ember.Component.extend({
+  // classNames: ['stats-each'],
   didInsertElement() {
     this._super();
     var data = this.data;
